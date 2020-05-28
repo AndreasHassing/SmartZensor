@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copy this file and name it config.xml; remember to set _your_ values in <preference> elements. -->
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="https://zenbit.dk/SmartZensor" version="1.0.0" viewmodes="maximized">
+    <tizen:application id="415knitg9j.SmartZensor" package="415knitg9j" required_version="4.0"/>
+    <author href="https://zenbit.dk/" email="andreas@famhassing.dk">Andreas Hassing</author>
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <icon src="icon.png"/>
+    <name>Smart Zensor</name>
+    <preference name="sonosClientId" value="<place Sonos client id here>" readonly="true"/>
+    <preference name="sonosClientSecret" value="<place Sonos client secret here>" readonly="true"/>
+    <preference name="sensorPollingRateMilliseconds" value="300" readonly="false"/>
+    <!-- Need `internet` privilege to talk to the Sonos API -->
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <!-- Need `power` privilege to keep the app alive even when the watch face is rotated out of sight -->
+    <tizen:privilege name="http://tizen.org/privilege/power"/>
+    <tizen:profile name="wearable"/>
+</widget>
