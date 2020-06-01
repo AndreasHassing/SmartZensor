@@ -1,9 +1,10 @@
 # Project-specific
-config.xml
+config.ts
 
 ## Tizen stuff
 .settings/
 .sign/
+*.wgt
 
 # Node gitignore: https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
 # Logs
