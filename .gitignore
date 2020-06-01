@@ -5,6 +5,8 @@ config.ts
 .settings/
 .sign/
 *.wgt
+# the following gets built from `npm run build`
+/tizenproject/main.js
 
 # Node gitignore: https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
 # Logs
