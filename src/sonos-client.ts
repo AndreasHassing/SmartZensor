@@ -1,4 +1,4 @@
-import { Household, Groups, Player } from "./dto/sonos-response";
+import { Households, Household, Groups, Player } from "./dto/sonos-response";
 import { HttpApiClient } from "./http-api-client";
 
 export class SonosClient {
@@ -9,14 +9,15 @@ export class SonosClient {
   }
 
   public getHouseholds(): Promise<Household[]> {
-    return this.httpClient.get<Household[]>("households", "households");
+    return this.httpClient
+      .get<Households>("households")
+      .then((res) => res.households);
   }
 
   public getPlayers(householdId: string): Promise<Player[]> {
-    return this.httpClient.get<Player[]>(
-      `households/${householdId}/groups`,
-      "players"
-    );
+    return this.httpClient
+      .get<Groups>(`households/${householdId}/groups`)
+      .then((res) => res.players);
   }
 
   public async getPlayer(

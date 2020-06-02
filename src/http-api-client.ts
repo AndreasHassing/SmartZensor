@@ -12,15 +12,18 @@ export class HttpApiClient {
     this.tokenRefreshUrl = tokenRefreshUrl;
   }
 
-  public get<T>(actionUrl: string, propertySelector: string): Promise<T> {
-    return this.request<T>(actionUrl, "GET", propertySelector);
+  public get<T>(actionUrl: string): Promise<T> {
+    return this.request<T>(actionUrl, "GET");
   }
 
   public post<T>(actionUrl: string, json: object = {}): Promise<T> {
-    return this.request<T>(actionUrl, "POST", null, json);
+    return this.request<T>(actionUrl, "POST", json);
   }
 
-  public async refreshToken(clientId: string, clientSecret: string) {
+  public async refreshToken(
+    clientId: string,
+    clientSecret: string
+  ): Promise<ApiToken> {
     const payload = {
       grant_type: "refresh_token",
       refresh_token: this.apiToken.refresh_token,
@@ -39,9 +42,7 @@ export class HttpApiClient {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
       },
       body: formBody,
-    })
-      .then((r) => r.json())
-      .catch(console.error);
+    }).then((r) => r.json());
 
     this.apiToken = newApiToken;
 
@@ -51,7 +52,6 @@ export class HttpApiClient {
   private async request<T>(
     actionUrl: string,
     method: string,
-    propertySelector: string,
     json: object = {}
   ): Promise<T> {
     const isObjectEmpty = (obj: object) => Object.entries(obj).length === 0;
@@ -68,12 +68,12 @@ export class HttpApiClient {
 
     if (!response.ok) {
       throw new Error(
-        `Failed to invoke action (${method} ${actionUrl}) on Sonos API: ${response}`
+        `Failed to invoke action (${method} ${actionUrl}) on Sonos API: ${await response.text()}`
       );
     }
 
     const responseJson = await response.json();
 
-    return propertySelector ? responseJson[propertySelector] : responseJson;
+    return responseJson;
   }
 }

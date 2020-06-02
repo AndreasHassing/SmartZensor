@@ -3,14 +3,14 @@ import { ApiToken } from "./dto/oauth";
 export class TokenRepository {
   private static readonly SonosApiTokenKey = "sonosApiToken";
 
-  public static setSonosApiToken(apiToken: ApiToken) {
+  public static setSonosApiToken(apiToken: ApiToken): void {
     tizen.keymanager.saveData(
       TokenRepository.SonosApiTokenKey,
       JSON.stringify(apiToken)
     );
   }
 
-  public static getSonosApiToken(): ApiToken {
+  public static getSonosApiToken(): ApiToken | undefined {
     try {
       const key = tizen.keymanager.getData({
         name: TokenRepository.SonosApiTokenKey,

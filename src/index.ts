@@ -34,6 +34,11 @@ async function initializeSonosClient() {
 
 window.onload = async function () {
   const textbox = document.getElementById("textbox");
+
+  if (!textbox) {
+    throw new Error("Application error: could not find textbox element");
+  }
+
   const errorLogger = new AppErrorLogger(textbox);
 
   const sonosClient = await initializeSonosClient();

@@ -1,6 +1,13 @@
 /**
  * https://developer.sonos.com/reference/control-api/households/
  */
+export type Households = {
+  households: Household[];
+};
+
+/**
+ * https://developer.sonos.com/reference/control-api/households/
+ */
 export type Household = {
   id: string;
 };
