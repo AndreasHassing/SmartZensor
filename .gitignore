@@ -1,5 +1,6 @@
 # Project-specific
 config.ts
+bootstrapped*ApiToken.json
 
 ## Tizen stuff
 .settings/

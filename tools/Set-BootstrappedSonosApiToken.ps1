@@ -22,8 +22,7 @@ param (
   [Parameter(Mandatory = $true)]
   [string] $ClientSecret,
 
-  [Parameter(Mandatory = $true)]
-  [string] $RedirectUri,
+  [string] $RedirectUri = "http://localhost",
 
   [string] $State = "whatever"
 )
@@ -36,7 +35,7 @@ $oauthLoginUrl = "https://api.sonos.com/login/v3/oauth?client_id=$ClientId&respo
 # kick off a browser, going to the Sonos login page
 Start-Process $oauthLoginUrl
 
-$authCode = Read-Host -Prompt "Enter authorization code from login:"
+$authCode = Read-Host -Prompt "Enter authorization code from login"
 
 $apiTokenResponse = `
   Invoke-WebRequest `
@@ -50,8 +49,7 @@ $apiTokenResponse = `
   } `
   -ContentType "application/x-www-form-urlencoded"
 
-Set-Clipboard $apiTokenResponse.Content
+$bootstrappedTokenPath = "$PSScriptRoot/../src/bootstrappedSonosApiToken.json"
+Out-File -FilePath $bootstrappedTokenPath -Encoding "UTF8" -InputObject $apiTokenResponse.Content
 
-Write-host $apiTokenResponse.Content
-
-Write-Host "The API Token is in your clipboard, paste it into /src/config.ts:bootstrappedSonosApiToken"
+Write-Host "The API Token has been saved to $(Resolve-Path $bootstrappedTokenPath)"
